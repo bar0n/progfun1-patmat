@@ -101,6 +101,13 @@ object Huffman {
     case _ => false
   }
 
+  def insert(fork: Fork, tail: List[CodeTree]): List[CodeTree] = {
+    tail match {
+      case Nil => List(fork)
+      case ::(head, tl) => if (weight(fork) < weight(head)) fork :: tail else head :: insert(fork, tl)
+    }
+  }
+
   /**
     * The parameter `trees` of this function is a list of code trees ordered
     * by ascending weights.
@@ -113,7 +120,11 @@ object Huffman {
     * If `trees` is a list of less than two elements, that list should be returned
     * unchanged.
     */
-  def combine(trees: List[CodeTree]): List[CodeTree] = ???
+  def combine(trees: List[CodeTree]): List[CodeTree] = trees match {
+
+    case h1 :: h2 :: tail => insert(Fork(h1, h2, chars(h1) ++ chars(h2), weight(h1) + weight(h2)), tail)
+    case list => list
+  }
 
   /**
     * This function will be called in the following way:
