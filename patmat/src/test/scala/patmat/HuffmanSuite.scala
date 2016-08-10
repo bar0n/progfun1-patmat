@@ -51,4 +51,28 @@ class HuffmanSuite extends FunSuite {
     }
   }
 
+  test("decodedSecret") {
+    new TestTrees {
+      //assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
+      val gh2=Fork(Leaf('G',1),Leaf('H',1),List('G','H'),2)
+      val ef2=Fork(Leaf('E',1),Leaf('F',1),List('E','F'),2)
+      val cd2= Fork(Leaf('C',1),Leaf('D',1),List('C','D'),2)
+      val cbd5=Fork(Leaf('B',3),cd2,List('B','C','D'),5)
+      val efgh4=Fork(ef2,gh2,List('E','F','G','H'),4)
+      val r9=Fork(cbd5,efgh4,List('B','C','D','E','F','G','H'),9)
+      val codetre = Fork(Leaf('A',8),r9, List('A','B','C','D','E','F','G','H'),17)
+
+
+      val dec = decode(codetre,List(1,0,1,1))
+      println(dec)
+      val enc = encode(codetre)(List('D'))
+      println(enc)
+      println(decodedSecret)
+      println(encodeSecret)
+      println(secret)
+
+    }
+  }
+
+
 }
